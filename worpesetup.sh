@@ -67,7 +67,7 @@ echo "Raspberry Pi向けUEFIファームウェアイメージ： https://github.
 echo -n "Raspberry Piのブートローダを更新するために "
 echo_color -t red -d 4 -n "sudo rpi-eeprom-update -a"
 echo " をお使いのRaspberry Piで実行しておいてください。"
-echo "WindowsのARM64版ISOファイル： https://www.xiuxitong.com/uup/?lang=ja-jp"
+echo "WindowsのARM64版ISOファイル： https://uupdump.net/?lang=ja-jp"
 lsblk
 read -p "上記のデバイスの中から目当てのデバイスを決めて文頭に /dev/をつけて入力してください： " wordevname
 echo $wordevname
