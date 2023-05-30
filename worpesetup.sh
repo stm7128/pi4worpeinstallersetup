@@ -76,10 +76,7 @@ read -p "ISOファイルのパスを入力してください。： " isops
 read -p "WindowsPEベースインストーラ本体のパスを入力してください： " peinps
 read -p "Raspberry PiのハードウェアのWindows向けドライバのパスを入力してください： " wordrps
 read -p "Raspberry Pi向けUEFIファームウェアイメージのパスを入力してください： " uefips
-sudo umount $wordevname"1"
-sudo umount $wordevname"2"
-sudo umount $wordevname"3"
-sudo umount $wordevname"4"
+sudo umount $wordevname"?"
 echo "デバイスにGPTパーティションテーブルを適用しています..."
 echo ""
 sudo parted -s $wordevname mklabel gpt
