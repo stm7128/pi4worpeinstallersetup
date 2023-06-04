@@ -69,44 +69,44 @@ echo_color -t red -d 4 -n "sudo rpi-eeprom-update -a"
 echo " をお使いのRaspberry Piで実行しておいてください。"
 echo "WindowsのARM64版ISOファイル： https://uupdump.net/?lang=ja-jp"
 lsblk
-read -p "上記のデバイスの中から目当てのデバイスを決めて文頭に /dev/をつけて入力してください： " wordevname
+read -p "上記のデバイスの中から目当てのデバイスを決めて入力してください（/devは必要ありません）： " wordevname
 echo $wordevname
-read -p "続行すると選択したデバイスの全てのデータが消えます。それでもいい場合はEnterを、ここで止める場合はCtrl + Cを押して下さい。"
 read -p "ISOファイルのパスを入力してください。： " isops
 read -p "WindowsPEベースインストーラ本体のパスを入力してください： " peinps
 read -p "Raspberry PiのハードウェアのWindows向けドライバのパスを入力してください： " wordrps
 read -p "Raspberry Pi向けUEFIファームウェアイメージのパスを入力してください： " uefips
+read -p "続行すると選択したデバイスの（今回は"$wordevname"全てのデータが消えます。それでもいい場合はEnterを、ここで止める場合はCtrl + Cを押して下さい。"
 sudo umount $wordevname"?"
 echo "デバイスにGPTパーティションテーブルを適用しています..."
 echo ""
-sudo parted -s $wordevname mklabel gpt
+sudo parted -s "/dev/"$wordevname mklabel gpt
 echo "フォーマット完了"
 echo ""
 echo "ブートローダパーティションを作成しています..."
 echo ""
-sudo parted -s $wordevname mkpart primary 1MB 1000MB
-sudo parted -s $wordevname set 1 msftdata on
+sudo parted -s "/dev/"$wordevname mkpart primary 1MB 1000MB
+sudo parted -s "/dev/"$wordevname set 1 msftdata on
 echo "作成完了"
 echo ""
 echo "インストーラパーティションを作成しています..."
 echo ""
-sudo parted -s $wordevname mkpart primary 1000MB 7000MB
-sudo parted -s $wordevname set 2 msftdata on
+sudo parted -s "/dev/"$wordevname mkpart primary 1000MB 7000MB
+sudo parted -s "/dev/"$wordevname set 2 msftdata on
 echo "作成完了"
 echo ""
 echo "ブートローダのパーティションをFAT32でフォーマットしています..."
-sudo mkfs.fat -F 32 $wordevname"1"
+sudo mkfs.fat -F 32 "/dev/"$wordevname"1"
 echo "完了"
 echo ""
 echo "インストーラのパーティションをNTFSでフォーマットしています..."
-sudo mkfs.ntfs -f $wordevname"2"
+sudo mkfs.ntfs -f "/dev/"$wordevname"2"
 echo "完了"
 echo ""
 echo "パーティションをマウントしています..."
 echo ""
 sudo mkdir -p /media/bootpart /media/winpart
-sudo mount $wordevname"1" /media/bootpart
-sudo mount $wordevname"2" /media/winpart
+sudo mount "/dev/"$wordevname"1" /media/bootpart
+sudo mount "/dev/"$wordevname"2" /media/winpart
 echo "完了"
 echo ""
 echo "ISOファイルをマウントしています..."
